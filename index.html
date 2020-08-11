@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css" type="text/css">
+        
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="myscript.js"></script>
+
+        <link rel="icon" href="images/bar-icon.png">
+        <title>
+            Reena Riguera
+        </title>
+    </head>
+
+    <body>
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#work">Works</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#organization">Organization</a></li>
+                    <li><a href="#about-me">About Me</a></li>
+                </ul>
+            </nav>
+        </header>
+
+
+        <section id="home" class="section-home">
+            <span id="name">REENA<br>RIGUERA.</span>
+            <div class="header-links">
+                <div class="perlink github-link">
+                    <div class="gitop"></div>
+                    <div class="gibot"></div>
+                </div>
+                <div class="perlink twitter-link">
+                    <div class="twtop"></div>
+                    <div class="twbot"></div>
+                </div>
+                <div class="perlink linkedin-link">
+                    <div class="litop"></div>
+                    <div class="libot"></div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="work" class="section-works">
+            <div>
+                <span class = "headertext">WORKS</span>
+                <div class = "headertextcontainer">
+                    <div class="headertext-real orange">WORKS</div>
+                    <div class="zigzag-white"></div>
+                </div>
+                <div class="work"></div>
+            </div>
+        </section>
+
+        <section id="education" class="section-educations">
+            <div>
+                <span class = "headertext orange">EDUCATION</span>
+                <div class = "headertextcontainer">
+                    <div class="headertext-real">EDUCATION</div>
+                    <div class="zigzag-orange"></div>
+                </div>
+                <div class="edu-grid">
+                    <div class=edu-year>
+                        <div class="arrowup"></div>
+                        <div class="education-years"></div>
+                        <div class="arrowdown"></div>
+                    </div>
+                    <div class="education-content"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="organization" class="section-organizations">
+            <div>
+                <span class = "headertext">ORGANIZATION</span>
+                <div class = "headertextcontainer">
+                    <div class="headertext-real orange">ORGANIZATION</div>
+                    <div class="zigzag-white"></div>
+                </div>
+                <div class="organization"></div>
+            </div>
+        </section>
+
+        <section id="about-me" class="section-about-me">
+            <div class="about-grid unskew">
+                <div class="headertext-about black">ABOUT ME</div>
+                <div class="about-me"></div>
+                <div class="footer-links">
+                    <div class="perlink github-link">
+                        <div class="gitop"></div>
+                        <div class="f-gibot"></div>
+                    </div>
+                    <div class="perlink twitter-link">
+                        <div class="twtop"></div>
+                        <div class="f-twbot"></div>
+                    </div>
+                    <div class="perlink linkedin-link">
+                        <div class="litop"></div>
+                        <div class="f-libot"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-auth.js"></script>
+
+        <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyDXaG8Ud8BEP-VkzxSs_KGU3fpPFt0H28I",
+                authDomain: "ccapdev-resume-f3192.firebaseapp.com",
+                databaseURL: "https://ccapdev-resume-f3192.firebaseio.com",
+                projectId: "ccapdev-resume-f3192",
+                storageBucket: "ccapdev-resume-f3192.appspot.com",
+                messagingSenderId: "738162282329",
+                appId: "1:738162282329:web:dd1ee268c690e6a5f38648"
+            };
+                
+                // Initialize Firebase
+            var defaultProject = firebase.initializeApp(firebaseConfig);
+                
+            var db = firebase.firestore();
+
+            db.collection("works").orderBy("year_created").get().then(function(snapshot) {
+                snapshot.forEach(function(doc){
+                    var wArticle = document.createElement("article");
+                    var wPhoto = document.createElement("img");
+
+                    var wName = document.createElement("div");
+                    var wYearCreated = document.createElement("div");
+                    var wLanguage = document.createElement("div");
+                    var wDesc = document.createElement("div");
+
+                    $(wPhoto).attr("src", doc.data().img_url);
+                    $(wName).text(doc.data().name);
+                    $(wYearCreated).text(doc.data().year_created);
+                    $(wLanguage).text(doc.data().language);
+                    $(wDesc).text(doc.data().desc);
+
+                    $(wArticle).addClass("w")
+                    $(wPhoto).addClass("w-photo")
+                    $(wName).addClass("w-name")
+                    $(wYearCreated).addClass("w-year-created")
+                    $(wLanguage).addClass("w-language")
+                    $(wDesc).addClass("w-desc")
+
+                    $(wArticle).append(wPhoto);
+                    $(wArticle).append(wName);
+                    $(wArticle).append(wYearCreated);
+                    $(wArticle).append(wLanguage);
+                    $(wArticle).append(wDesc);
+
+                    $("div.work").append(wArticle);
+
+                    var i = 0;
+                    $("article.w").each(function(){
+                        $(wArticle).attr("id","warticle"+i)
+                        i++
+                    });
+                })
+            });
+
+            db.collection("educations").orderBy("year_start").get().then(function(snapshot) {
+                snapshot.forEach(function(doc){
+                    var eduArticle = document.createElement("article");
+
+                    var eduDegree = document.createElement("div");
+                    var eduSchool = document.createElement("div");
+                    var eduYearStart = document.createElement("div");
+                    var eduYearEnd = document.createElement("div");
+                    var eduType = document.createElement("div");
+
+                    $(eduDegree).text(doc.data().degree);
+                    $(eduSchool).text(doc.data().school);
+                    $(eduYearStart).text(doc.data().year_start);
+                    $(eduYearEnd).text(doc.data().year_start+"-"+doc.data().year_end);
+                    $(eduType).text("("+doc.data().type+")");
+
+                    $(eduArticle).addClass("edu")
+                    $(eduArticle).attr('id', doc.data().year_start+"article")
+                    $(eduDegree).addClass("edu-degree")
+                    $(eduSchool).addClass("edu-school")
+                    $(eduYearStart).attr('id', doc.data().year_start)
+                    $(eduYearStart).addClass("edu-year-start")
+                    $(eduYearEnd).addClass("edu-year-end")
+                    $(eduType).addClass("edu-type")
+
+                    $(eduArticle).append(eduYearEnd);
+                    $(eduArticle).append(eduDegree);
+                    $(eduArticle).append(eduSchool);
+                    $(eduArticle).append(eduType);
+
+                    $("div.education-years").append(eduYearStart);
+
+                    $("div.education-content").append(eduArticle);      
+                })
+
+                var i = 0;
+                var yearids = [];  
+                $(".edu-year-start").each(function(){
+                    yearids[i++] =  this.id; 
+                });
+
+                
+                let temp = 0;
+                let eduinterval = setInterval(function(){
+                    $("#"+yearids[temp]).css("color", "")
+                    $("#"+yearids[temp]+"article").fadeToggle(200)
+                    if(temp < yearids.length-1){
+                        temp++;
+                    }else{
+                        temp = 0;
+                    }
+                    $("#"+yearids[temp]+"article").delay(200).fadeToggle(500)
+                    $("#"+yearids[temp]).css("color", "rgb(237, 77, 59)")
+                    
+                }, 7000);
+
+                $("#"+yearids[temp]).css("color", "rgb(237, 77, 59)")
+                $("#"+yearids[temp]+"article").css("display","block")
+
+                $(".edu-year-start").click(function(){
+                    clearInterval(eduinterval)
+                    $("#"+yearids[temp]).css("color", "")
+                    for(x=0;x<yearids.length;x++){
+                        if(yearids[x] == this.id){
+                            $("#"+yearids[temp]+"article").fadeToggle(200)
+                            temp = x;
+                            $("#"+yearids[temp]+"article").delay(200).fadeToggle(500)
+                        }
+                    }
+                    $("#"+yearids[temp]).css("color", "rgb(237, 77, 59)")
+                })
+
+                $(".arrowup").click(function(){
+                    clearInterval(eduinterval)
+                    if(temp > 0){
+                        $("#"+yearids[temp]).css("color", "")
+                        $("#"+yearids[temp]+"article").fadeToggle(200)
+                        temp --;
+                        $("#"+yearids[temp]+"article").delay(200).fadeToggle(500)
+                        $("#"+yearids[temp]).css("color", "rgb(237, 77, 59)")
+                    }
+                })
+                $(".arrowdown").click(function(){
+                    clearInterval(eduinterval)
+                    if(temp < yearids.length-1){
+                        $("#"+yearids[temp]).css("color", "")
+                        $("#"+yearids[temp]+"article").fadeToggle(200)
+                        temp ++;
+                        $("#"+yearids[temp]+"article").delay(200).fadeToggle(500)
+                        $("#"+yearids[temp]).css("color", "rgb(237, 77, 59)")
+                    }
+                })
+
+            });
+
+            db.collection("organizations").orderBy("year_start").get().then(function(snapshot) {
+                snapshot.forEach(function(doc){
+                    var orgArticle = document.createElement("article");
+
+                    var orgName = document.createElement("div");
+                    var orgPosition = document.createElement("div");
+                    var orgYear = document.createElement("div");
+
+                    $(orgName).text(doc.data().name);
+                    $(orgPosition).text(doc.data().position);
+                    $(orgYear).text(doc.data().year_start+"-"+doc.data().year_end);
+
+                    $(orgArticle).addClass("org")
+                    $(orgName).addClass("org-name")
+                    $(orgPosition).addClass("orange")
+                    $(orgYear).addClass("org-year")
+
+                    $(orgArticle).append(orgName);
+                    $(orgArticle).append(orgPosition);
+                    $(orgArticle).append(orgYear);
+
+                    $("div.organization").append(orgArticle);
+
+                    var i = 0;
+                    $("article.org").each(function(){
+                        $(orgName).attr("id","orgname"+i)
+                        $(orgYear).attr("id","orgyear"+i)
+                        $(orgArticle).attr("id","orgarticle"+i)
+                        i++
+                    });
+                })
+                
+                var i = 0;
+                var nameids = [];  
+                $(".org-name").each(function(){
+                    nameids[i++] =  this.id; 
+                });
+
+                i=0;
+                var yearids = [];  
+                $(".org-year").each(function(){
+                    yearids[i++] =  this.id; 
+                });
+
+                i=0;
+                var orgids = [];  
+                $("article.org").each(function(){
+                    orgids[i++] =  this.id; 
+                });
+
+                let temp;
+
+                //source: https://stackoverflow.com/questions/29072284/jquery-how-to-make-change-margin-left-of-an-element-smoothly
+                $("article.org").hover(function(){
+                    for(x=0;x<orgids.length;x++){
+                        if(orgids[x] == this.id){
+                            temp=x;
+                        }
+                    }
+                    $("#"+nameids[temp]).animate({'margin-bottom': '5'}, 100);
+                    $("#"+yearids[temp]).animate({'margin-top': '5'}, 100);
+                }, function(){
+                    $("#"+nameids[temp]).animate({'margin-bottom': '0'}, 100);
+                    $("#"+yearids[temp]).animate({'margin-top': '0'}, 100);
+                });
+
+            });
+
+            db.collection("others").get().then(function(snapshot) {
+                snapshot.forEach(function(doc){
+                    var about = document.createElement("div");
+                    var github = document.createElement("a");
+                    var twitter = document.createElement("a");
+                    var linkedin = document.createElement("a");
+
+                    $(about).text(doc.data().desc);
+
+                    $(github).attr("href", doc.data().github);
+                    $(twitter).attr("href", doc.data().twitter);
+                    $(linkedin).attr("href", doc.data().linkedin);
+
+                    $("div.about-me").append(about);
+                    $("div.github-link").wrap(github);
+                    $("div.twitter-link").wrap(twitter);
+                    $("div.linkedin-link").wrap(linkedin);
+                })
+            });
+        </script>
+
+
+    </body>
+</html>
